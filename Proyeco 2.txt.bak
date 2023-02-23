@@ -1,0 +1,120 @@
+SEMANA 2
+
+Todo cliente puede usar los sistemas multicanales del banco (Web, Movil)
+previo registro en el sistema. Para ello va a tener que registrar a partir de su
+tarjeta de débito y validarla correctamente: número de tarjeta, fecha de
+vencimiento y código de validación. Adicionalmente, el usuario deberá
+proporcionar su tipo y número de documento de identificación y esta debe
+coincidir con los datos del cliente al que pertenece la tarjeta de débito usada
+para el registro.
+
+
+MSACCOUNT -> 
+Buscar por numero de tarjeta -> 
+Buscar por cuenta por idTarjeta >
+
+Buscar por tipo y número de documento -> MScliente
+
+--------------------------------------------------------------------------------------
+
+Una vez validada la tarjeta deberá crear una nueva contraseña para acceder
+a los sistemas multicanal. Esta contraseña consistirá en 6 dígitos y tanto para
+crearla como modificarla deberá validar el PIN de la tarjeta.
+
+Crear campo adicional en Tarjeta para clave 6 digitos
+
+MS BANKCARD
+Crear contraseña -> 
+Modificar contraseña ->
+
+--------------------------------------------------------------------------------------
+
+En el sistema multicanal no se puede registrar más de dos tarjetas de débito
+y la tarjeta debe estar tanto vigente como activa.
+
+INPUT -> numeroTarjeta
+
+Buscar por numero de tarjeta -> retorna idcliente
+
+Buscar cuentas - tarjetas debito (TD) del cliente y validar que no registros
+
+--------------------------------------------------------------------------------------
+
+Para el login se utilizará tanto el número de la tarjeta de débito como la
+contraseña para multicanal.
+
+Buscar por numero de tarjeta -> retorna contraseña
+Buscar idTarjeta en cuenta y validar que sea de debito (TD)
+
+--------------------------------------------------------------------------------------
+
+El sistema deberá ser capaz de retornar en una sola consulta todos los saldos
+de los productos de un cliente y agrupados en: créditos, tarjetas de crédito y
+cuentas bancarias.
+
+Buscar en cuenta por idCliente TC, C y CB
+
+--------------------------------------------------------------------------------------
+
+Permitir la consulta de los movimientos de una cuenta bancaria y traer los
+siguientes datos: número de cuenta y saldo; por cada movimiento los
+siguientes campos: fecha, descripción, monto (positivo si fue un depósito o
+negativo si fue un retiro)
+
+input - IDCUENTA 
+
+Buscar por idCuenta (CB) en Cuenta y traer detalle de la cuenta (número de cuenta y saldo)
+Buscar por idCuenta (CB) en Operaciones y traer sus movimientos (fecha, descripción, monto)
+
+--------------------------------------------------------------------------------------
+
+Permitir la consulta de los movimientos de una tarjeta de crédito y traer los
+siguientes datos: número de tarjeta, línea de crédito, línea disponible, crédito
+utilizado y fecha de la próxima facturación; por cada movimiento los
+siguientes campos: fecha, descripción, monto (positivo si fue un pago a la
+tarjeta o negativo si fue un cargo).
+
+input - IDCUENTA 
+
+Buscar por idCuenta (TC) en Cuenta y traer detalle de la cuenta y tarjeta (número de tarjeta, línea de crédito, línea disponible, crédito utilizado y fecha de la próxima facturación)
+Buscar por idCuenta (TC) en Operaciones y traer sus movimientos (fecha, descripción, monto)
+
+--------------------------------------------------------------------------------------
+
+Permitir la consulta de un crédito y traer los siguientes datos: número de
+crédito, monto pagado, pendiente por pagar, monto total, deuda atrasada,
+número de cuotas pagas y cuotas pendientes; por cada movimiento los
+siguientes campos: fecha, descripción y monto pagado.
+
+agregar campo deuda atrasada en
+input - IDCUENTA 
+
+Buscar por idCuenta (C) en Cuenta y traer detalle de la cuenta (número de crédito, monto pagado, pendiente por pagar, monto total, deuda atrasada número de cuotas pagas y cuotas pendientes)
+Buscar por idCuenta (C) en Operaciones y traer sus movimientos (fecha, descripción, monto)
+
+--------------------------------------------------------------------------------------
+
+Por cuenta bancaria el número de movimientos a retornar no deberá ser
+superior a 50 y no mayor 4 meses. Para las tarjetas de crédito el número de
+movimientos a retornar no deberá ser superior a 50 y no mayor 12 meses.
+En el caso de los créditos deberá retornar todos los movimientos.
+
+--------------------------------------------------------------------------------------
+
+Todas estas nuevas funcionalidades deberán estar implementadas en
+microservicios nuevos y todas las APIs deben ser reactivas.
+
+--------------------------------------------------------------------------------------
+
+Cada uno de los nuevos microservicios deberá crear su propia auditoria con
+cada registro con un identificador único por cada una de las operaciones
+solicitadas. Adicionalmente, agregar en un registro distinto si la operación fue
+exitosa o fallida. ¡Importante! Garantizar que durante este registro no se
+persistan ninguno de los datos personales del cliente y ofuscar el número de
+las tarjetas de crédito, débito y el crédito. Y nunca los valores del PIN o
+contraseña.
+
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+
